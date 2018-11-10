@@ -12,21 +12,23 @@ blocks:
         commands:
           - checkout
           - pip install --user pipenv
-          - python -m pipenv install --dev --ignore-pipfile
+          - python -m pipenv install pre-commit
       jobs:
         - name: Run pre-commit hooks
           commands:
             - python -m pipenv run pre-commit run --all-files
 
-  - name: "Unit tests"
+  - name: "Testing"
     task:
       prologue:
         commands:
           - checkout
+          - pip install --user pipenv
+          - python -m pipenv install pytest
           - docker-compose -f docker-compose.test.yml build
           - docker-compose -f docker-compose.test.yml up -d
       jobs:
-        - name: Check Django connection
+        - name: Run pytest
           commands:
             - sleep 3
             - echo -en "HEAD / HTTP/1.0\n\n\n" | nc  127.0.0.1 8000 2>&1 | grep WSGIServer &>/dev/null

@@ -10,8 +10,9 @@ blocks:
     task:
       prologue:
         commands:
-          - python3 -m pip install pipenv
-          - pipenv --install --dev --ignore-pipfile
+          - checkout
+          - pip install pipenv
+          - python -m pipenv --install --dev --ignore-pipfile
       jobs:
         - name: Run pre-commit hooks
           commands:

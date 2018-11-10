@@ -16,4 +16,4 @@ blocks:
       jobs:
         - name: Run pre-commit hooks
           commands:
-            - python -m pipenv run pre-commit --all-files
+            - python -m pipenv run pre-commit run --all-files

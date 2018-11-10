@@ -11,7 +11,7 @@ blocks:
       prologue:
         commands:
           - checkout
-          - pip install pipenv
+          - pip install --user pipenv
           - python -m pipenv --install --dev --ignore-pipfile
       jobs:
         - name: Run pre-commit hooks

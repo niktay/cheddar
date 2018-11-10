@@ -18,7 +18,7 @@ blocks:
           commands:
             - python -m pipenv run pre-commit run --all-files
 
-  - name: "Build"
+  - name: "Unit tests"
     task:
       prologue:
         commands:
@@ -30,6 +30,7 @@ blocks:
           commands:
             - sleep 3
             - echo -en "HEAD / HTTP/1.0\n\n\n" | nc  127.0.0.1 8000 2>&1 | grep WSGIServer &>/dev/null
+            - python -m pipenv run pytest
       epilogue:
         commands:
           - docker-compose down --remove-orphans

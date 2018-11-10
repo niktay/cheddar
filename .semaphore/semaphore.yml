@@ -6,7 +6,7 @@ agent:
     os_image: ubuntu1804
 
 blocks:
-  - name: "Check Pre-commit"
+  - name: "Pre-commit"
     task:
       prologue:
         commands:
@@ -17,3 +17,18 @@ blocks:
         - name: Run pre-commit hooks
           commands:
             - python -m pipenv run pre-commit run --all-files
+
+  - name: "Build"
+    task:
+      prologue:
+        commands:
+          - checkout
+          - docker-compose -f docker-compose.yml build
+          - docker-compose -f docker-compose.yml up -d
+      jobs:
+        - name:
+          commands:
+            - echo -en "HEAD / HTTP/1.0\n\n\n" | nc  127.0.0.1 80 2>&1 | grep Server &>/dev/null
+      epilogue:
+        commands:
+          - docker-compose down --remove-orphans

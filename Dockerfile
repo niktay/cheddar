@@ -1,7 +1,7 @@
 FROM python:3.7.0-alpine
 
 LABEL Name=cheddar
-EXPOSE 8000
+EXPOSE 80
 
 WORKDIR /app
 ADD cheddar/ /app

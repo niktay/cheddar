@@ -10,6 +10,7 @@ django = "*"
 pylint = "*"
 pytest = "*"
 pre-commit = "*"
+yapf = "*"
 
 [requires]
 python_version = "3.7"

@@ -12,7 +12,7 @@ blocks:
         commands:
           - checkout
           - pip install --user pipenv
-          - python -m pipenv --install --dev --ignore-pipfile
+          - python -m pipenv install --dev --ignore-pipfile
       jobs:
         - name: Run pre-commit hooks
           commands:

@@ -1,0 +1,8 @@
+version: "2.1"
+
+services:
+  cheddar:
+    image: cheddar
+    build: .
+    ports:
+      - 8000:80

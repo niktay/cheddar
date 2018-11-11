@@ -5,12 +5,15 @@ name = "pypi"
 
 [packages]
 django = "*"
+graphene-django = "*"
+django-filter = "*"
 
 [dev-packages]
 pylint = "*"
 pytest = "*"
 pre-commit = "*"
 yapf = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.7"

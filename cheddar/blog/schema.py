@@ -41,12 +41,33 @@ class DeletePost(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, post_data=None):
-        post_to_delete = Post.objects.get(pk=post_data.id)
-        deleted_post = deepcopy(post_to_delete)
+        to_delete = Post.objects.get(pk=post_data.id)
+        deleted_post = deepcopy(to_delete)
 
-        post_to_delete.delete()
+        to_delete.delete()
 
         return DeletePost(post=deleted_post)
+
+
+class UpdatePostInput(InputObjectType):
+    id = graphene.ID(required=True)
+    content = graphene.String(required=True)
+
+
+class UpdatePostContent(graphene.Mutation):
+    class Arguments:
+        post_data = UpdatePostInput(required=True)
+
+    post = graphene.Field(PostType)
+
+    @staticmethod
+    def mutate(root, info, post_data=None):
+        to_update = Post.objects.get(pk=post_data.id)
+
+        to_update.content = post_data.content
+        to_update.save()
+
+        return UpdatePostContent(post=to_update)
 
 
 class Query(object):
@@ -59,3 +80,4 @@ class Query(object):
 class Mutation(object):
     create_post = CreatePost.Field()
     delete_post = DeletePost.Field()
+    update_post_content = UpdatePostContent.Field()

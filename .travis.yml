@@ -7,7 +7,7 @@ services:
   - docker
 
 install:
-  - docker-compose build -f docker.compose.test.yml
+  - docker-compose -f docker-compose.test.yml build
 
 script:
-  - docker-compose run -f docker.compose.test.yml --rm cheddar py.test
+  - docker-compose -f docker-compose.test.yml run --rm cheddar py.test

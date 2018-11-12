@@ -2,8 +2,8 @@ version: "2.1"
 
 services:
   cheddar:
-    image: cheddar
     build:
+      context: .
       dockerfile: Test.Dockerfile
     volumes:
       - .:/app

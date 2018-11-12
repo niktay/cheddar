@@ -9,5 +9,5 @@ ADD Pipfile.lock /app/Pipfile.lock
 ADD Pipfile /app/Pipfile
 
 RUN python3 -m pip install pipenv
-RUN pipenv install --ignore-pipfile
-CMD ["pipenv", "run", "python3", "-u", "manage.py", "runserver", "0.0.0.0:80"]
+RUN pipenv install --dev --ignore-pipfile
+# CMD ["pipenv", "run", "python3", "-u", "manage.py", "runserver", "0.0.0.0:80"]

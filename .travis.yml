@@ -1,0 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
+install:
+  - docker-compose build
+
+script:
+  - docker-compose run -f docker.compose-test.yml --rm cheddar py.test

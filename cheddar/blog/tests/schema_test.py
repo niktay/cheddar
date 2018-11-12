@@ -36,19 +36,23 @@ class SchemaTest(TestCase):
         expected_result = {
             'data':
             OrderedDict([(
-                'allPosts', [
+                'allPosts',
+                [
                     OrderedDict([
-                        ('id', '1'), ('title', 'Title01'),
+                        ('id', '1'),
+                        ('title', 'Title01'),
                         ('content', 'Content01'),
                         ('createdAt', '2012-12-12T00:00:00+00:00'),
                     ]),
                     OrderedDict([
-                        ('id', '2'), ('title', 'Title02'),
+                        ('id', '2'),
+                        ('title', 'Title02'),
                         ('content', 'Content02'),
                         ('createdAt', '2012-12-12T00:00:00+00:00'),
                     ]),
                     OrderedDict([
-                        ('id', '3'), ('title', 'Title03'),
+                        ('id', '3'),
+                        ('title', 'Title03'),
                         ('content', 'Content03'),
                         ('createdAt', '2012-12-12T00:00:00+00:00'),
                     ]),
@@ -57,4 +61,136 @@ class SchemaTest(TestCase):
         }
 
         executed = cls.client.execute(query)
+        assert executed == expected_result
+
+    @classmethod
+    @freeze_time('2012-12-12')
+    def test_create_post_returns_post(cls):
+        mutation = '''
+            mutation createPost($input: CreatePostInput!) {
+                createPost(newPost: $input) {
+                    post {
+                        id
+                        title
+                        content
+                        createdAt
+                    }
+                }
+            }
+        '''
+        new_post = {
+            'input': {
+                'title': 'Title04',
+                'content': 'Content04',
+            },
+        }
+        expected_result = {
+            'data':
+            OrderedDict([(
+                'createPost',
+                OrderedDict(
+                    [(
+                        'post',
+                        OrderedDict(
+                            [
+                                ('id', '4'), ('title', 'Title04'),
+                                ('content', 'Content04'),
+                                (
+                                    'createdAt',
+                                    '2012-12-12T00:00:00+00:00',
+                                ),
+                            ],
+                        ),
+                    )],
+                ),
+            )]),
+        }
+
+        executed = cls.client.execute(mutation, variables=new_post)
+        assert executed == expected_result
+
+    @classmethod
+    def test_delete_post_returns_post(cls):
+        mutation = '''
+            mutation {
+                deletePost(deleteId: 1) {
+                    post {
+                        id
+                        title
+                        content
+                        createdAt
+                    }
+                }
+            }
+        '''
+        expected_result = {
+            'data':
+            OrderedDict([(
+                'deletePost',
+                OrderedDict(
+                    [(
+                        'post',
+                        OrderedDict(
+                            [
+                                ('id', '1'), ('title', 'Title01'),
+                                ('content', 'Content01'),
+                                (
+                                    'createdAt',
+                                    '2012-12-12T00:00:00+00:00',
+                                ),
+                            ],
+                        ),
+                    )],
+                ),
+            )]),
+        }
+
+        executed = cls.client.execute(mutation)
+        assert executed == expected_result
+
+    @classmethod
+    @freeze_time('2012-12-12')
+    def test_update_post_returns_post(cls):
+        mutation = '''
+            mutation updatePost($input: UpdatePostInput!) {
+                updatePost(changes: $input) {
+                    post {
+                        id
+                        title
+                        content
+                        createdAt
+                    }
+                }
+            }
+        '''
+        changes = {
+            'input': {
+                'id': 1,
+                'title': 'updatedTitle',
+            },
+        }
+        expected_result = {
+            'data':
+            OrderedDict([(
+                'updatePost',
+                OrderedDict(
+                    [(
+                        'post',
+                        OrderedDict(
+                            [
+                                ('id', '1'), ('title', 'updatedTitle'),
+                                ('content', 'Content01'),
+                                (
+                                    'createdAt',
+                                    '2012-12-12T00:00:00+00:00',
+                                ),
+                            ],
+                        ),
+                    )],
+                ),
+            )]),
+        }
+
+        executed = cls.client.execute(mutation, variables=changes)
+        print(executed)
         assert executed == expected_result

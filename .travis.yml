@@ -13,4 +13,4 @@ before_install:
 install:
   - docker-compose -f "docker-compose.test.yml" build
 script:
-  - docker-compose -f "docker-compose.test.yml" run -e COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN} cheddar sh -c "pipenv run py.test && pipenv run coveralls"
+  - docker-compose -f "docker-compose.test.yml" run -e COVERALLS_REPO_TOKEN="$COVERALLS_REPO_TOKEN" -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID" -e TRAVIS_BRANCH="$TRAVIS_BRANCH" cheddar sh -c "pipenv run py.test && pipenv run coveralls"

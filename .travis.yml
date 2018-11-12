@@ -1,10 +1,13 @@
+os: linux
+dist: trusty
 sudo: required
+language: python
 
 services:
   - docker
 
 install:
-  - docker-compose build
+  - docker-compose build -f docker.compose.test.yml
 
 script:
-  - docker-compose run -f docker.compose-test.yml --rm cheddar py.test
+  - docker-compose run -f docker.compose.test.yml --rm cheddar py.test

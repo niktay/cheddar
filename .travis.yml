@@ -5,9 +5,12 @@ language: python
 
 services:
   - docker
-
+before_install:
+  - pip install pre-commit
+  - pre-commit run --all-files
 install:
   - docker-compose -f "docker-compose.test.yml" build
-
 script:
   - docker-compose -f "docker-compose.test.yml" run cheddar pipenv run py.test
+after_success:
+  - docker-compose -f "docker-compose.test.yml" run cheddar COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN} pipenv run coveralls

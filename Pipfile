@@ -17,10 +17,12 @@ pylint-django = "*"
 "flake8" = "*"
 rope = "*"
 pytest-django = "*"
-pytest-cov = "*"
 mixer = "*"
 pytest-pythonpath = "*"
 freezegun = "*"
+python-coveralls = "*"
+coverage = "==4.0.3"
+pytest-cov = "==2.5.0"
 
 [requires]
 python_version = "3.7"

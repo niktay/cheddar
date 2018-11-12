@@ -4,5 +4,8 @@ services:
   cheddar:
     image: cheddar
     build: .
+    volumes:
+      - .:/app
+    working_dir: /app
     ports:
       - 8000:80

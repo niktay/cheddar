@@ -4,9 +4,8 @@ LABEL Name=cheddar
 EXPOSE 80
 
 WORKDIR /app
-ADD cheddar/ /app
-ADD Pipfile.lock /app/Pipfile.lock
-ADD Pipfile /app/Pipfile
+ADD . /app
+
 
 RUN python3 -m pip install pipenv
 RUN pipenv install --ignore-pipfile

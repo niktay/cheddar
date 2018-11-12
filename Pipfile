@@ -5,12 +5,24 @@ name = "pypi"
 
 [packages]
 django = "*"
+graphene-django = "*"
+django-filter = "*"
 
 [dev-packages]
 pylint = "*"
 pytest = "*"
 pre-commit = "*"
 yapf = "*"
+pylint-django = "*"
+"flake8" = "*"
+rope = "*"
+pytest-django = "*"
+mixer = "*"
+pytest-pythonpath = "*"
+freezegun = "*"
+python-coveralls = "*"
+coverage = "==4.0.3"
+pytest-cov = "==2.5.0"
 
 [requires]
 python_version = "3.7"

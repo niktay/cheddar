@@ -7,7 +7,7 @@ services:
   - docker
 
 install:
-  - docker-compose -f docker-compose.test.yml build
+  - docker-compose -f "docker-compose.test.yml" build
 
 script:
-  - docker-compose -f docker-compose.test.yml run --rm cheddar py.test
+  - docker-compose -f "docker-compose.test.yml" run cheddar pipenv run py.test

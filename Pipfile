@@ -16,6 +16,11 @@ yapf = "*"
 pylint-django = "*"
 "flake8" = "*"
 rope = "*"
+pytest-django = "*"
+pytest-cov = "*"
+mixer = "*"
+pytest-pythonpath = "*"
+freezegun = "*"
 
 [requires]
 python_version = "3.7"

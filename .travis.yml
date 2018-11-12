@@ -8,9 +8,9 @@ python:
 services:
   - docker
 before_install:
-  - pip install pre-commit python-coveralls
+  - pip install pre-commit
   - pre-commit run --all-files
 install:
   - docker-compose -f "docker-compose.test.yml" build
 script:
-  - docker-compose -f "docker-compose.test.yml" run -e COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN} cheddar pipenv run py.test && pipenv run coverage
+  - docker-compose -f "docker-compose.test.yml" run -e COVERALLS_REPO_TOKEN=${COVERALLS_REPO_TOKEN} cheddar "pipenv run py.test && pipenv run coverage"

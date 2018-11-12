@@ -18,56 +18,60 @@ class CreatePostInput(InputObjectType):
 
 class CreatePost(graphene.Mutation):
     class Arguments:
-        post_data = CreatePostInput(required=True)
+        new_post = CreatePostInput(required=True)
 
     post = graphene.Field(PostType)
 
     @staticmethod
-    def mutate(root, info, post_data=None):
-        post = Post(title=post_data.title, content=post_data.content)
+    def mutate(root, info, new_post=None):
+        post = Post(title=new_post.title, content=new_post.content)
         post.save()
+
         return CreatePost(post=post)
-
-
-class DeletePostInput(InputObjectType):
-    id = graphene.ID(required=True)
 
 
 class DeletePost(graphene.Mutation):
     class Arguments:
-        post_data = DeletePostInput(required=True)
+        delete_id = graphene.ID(required=True)
 
     post = graphene.Field(PostType)
 
     @staticmethod
-    def mutate(root, info, post_data=None):
-        to_delete = Post.objects.get(pk=post_data.id)
-        deleted_post = deepcopy(to_delete)
+    def mutate(root, info, delete_id=None):
+        unwanted = Post.objects.get(pk=delete_id)
+        deleted_data = deepcopy(unwanted)
 
-        to_delete.delete()
+        unwanted.delete()
 
-        return DeletePost(post=deleted_post)
+        return DeletePost(post=deleted_data)
 
 
 class UpdatePostInput(InputObjectType):
     id = graphene.ID(required=True)
-    content = graphene.String(required=True)
+    title = graphene.String()
+    content = graphene.String()
 
 
-class UpdatePostContent(graphene.Mutation):
+class UpdatePost(graphene.Mutation):
     class Arguments:
-        post_data = UpdatePostInput(required=True)
+        changes = UpdatePostInput(required=True)
 
     post = graphene.Field(PostType)
 
     @staticmethod
-    def mutate(root, info, post_data=None):
-        to_update = Post.objects.get(pk=post_data.id)
+    def mutate(root, info, changes=None):
+        receipient = Post.objects.get(pk=changes.id)
+        UpdatePost.save_changes(changes, receipient)
 
-        to_update.content = post_data.content
-        to_update.save()
+        return UpdatePost(post=receipient)
 
-        return UpdatePostContent(post=to_update)
+    @staticmethod
+    def save_changes(changes, receipient):
+        for key, value in changes.items():
+            if key != 'id':
+                receipient.__setattr__(key, value)
+
+        receipient.save()
 
 
 class Query(object):
@@ -80,4 +84,4 @@ class Query(object):
 class Mutation(object):
     create_post = CreatePost.Field()
     delete_post = DeletePost.Field()
-    update_post_content = UpdatePostContent.Field()
+    update_post = UpdatePost.Field()

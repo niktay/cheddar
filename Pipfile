@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 graphene-django = "*"
 django-filter = "*"
+django-graphql-jwt = "*"
 
 [dev-packages]
 pylint = "*"

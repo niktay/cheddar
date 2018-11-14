@@ -1,5 +1,6 @@
 import blog.schema
 import graphene
+import graphql_jwt
 import users.schema
 
 
@@ -8,10 +9,13 @@ class Query(users.schema.Query, blog.schema.Query, graphene.ObjectType):
 
 
 class Mutation(
-    users.schema.Mutation, blog.schema.Mutation,
-    graphene.ObjectType,
+        users.schema.Mutation,
+        blog.schema.Mutation,
+        graphene.ObjectType,
 ):
-    pass
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
 
 
 schema = graphene.Schema(

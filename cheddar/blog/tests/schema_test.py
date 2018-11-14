@@ -11,11 +11,11 @@ from cheddar.schema import schema
 
 
 @pytest.mark.django_db
-class SchemaTest(TestCase):
+class BlogSchemaTest(TestCase):
     @classmethod
     @freeze_time('2012-12-12')
     def setUpClass(cls):
-        super(SchemaTest, cls).setUpClass()
+        super(BlogSchemaTest, cls).setUpClass()
         cls.client = Client(schema)
         mixer.blend(Post, title='Title01', content='Content01')
         mixer.blend(Post, title='Title02', content='Content02')

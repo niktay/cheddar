@@ -1,2 +1,5 @@
 [run]
-omit = */apps.py
+omit =
+    */apps.py,
+    cheddar/cheddar/*
+    cheddar/manage.py
